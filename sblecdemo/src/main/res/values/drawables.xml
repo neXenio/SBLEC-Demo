@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="direction_icons">
+        <item>@drawable/ic_directions_bike_black_24dp</item>
+        <item>@drawable/ic_directions_boat_black_24dp</item>
+        <item>@drawable/ic_directions_bus_black_24dp</item>
+        <item>@drawable/ic_directions_car_black_24dp</item>
+        <item>@drawable/ic_directions_railway_black_24dp</item>
+        <item>@drawable/ic_directions_run_black_24dp</item>
+        <item>@drawable/ic_directions_subway_black_24dp</item>
+    </array>
+
+</resources>

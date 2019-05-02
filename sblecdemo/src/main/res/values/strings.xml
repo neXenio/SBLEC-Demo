@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">SBLEC Demo</string>
+
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_missing_permissions">Required permissions missing</string>
+    <string name="error_bluetooth_disabled">Bluetooth disabled</string>
+    <string name="error_location_services_disabled">Location services disabled</string>
+    <string name="error_sending_failed">Sending failed</string>
+    <string name="error_receiving_failed">Receiving failed</string>
+
+    <string name="status_receiving_started">Receiving started</string>
+    <string name="status_receiving_stopped">Receiving stopped</string>
+
+    <string name="status_sending_started">Sending started</string>
+    <string name="status_sending_stopped">Sending stopped</string>
+
+    <string name="status_updated_by_device">Updated by %1$s</string>
+
+    <string name="initial_title">@string/app_name</string>
+    <string name="initial_sub_title">Tap the icon or background to change it</string>
+
+    <string name="action_retry">Retry</string>
+    <string name="action_enable">Enable</string>
+    <string name="action_grant_permission">Grant</string>
+
+</resources>
