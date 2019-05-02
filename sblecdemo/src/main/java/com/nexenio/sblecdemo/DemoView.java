@@ -1,5 +1,6 @@
 package com.nexenio.sblecdemo;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -28,8 +29,15 @@ public interface DemoView<Presenter extends DemoPresenter> {
 
     void hideReceivingFailedError();
 
+    void onViewStarted();
+
+    void onViewStopped();
+
     @NonNull
     Context getContext();
+
+    @NonNull
+    Activity getActivity();
 
     @NonNull
     Presenter createPresenter();

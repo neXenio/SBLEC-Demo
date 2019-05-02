@@ -2,11 +2,13 @@ package com.nexenio.sblecdemo;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
+import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,13 +20,12 @@ import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
-public abstract class DemoActivity extends AppCompatActivity implements DemoView<DemoPresenter> {
+public class DemoLayout extends RelativeLayout implements DemoView<DemoPresenter> {
 
     @NonNull
-    protected final DemoPresenter presenter;
+    protected DemoPresenter presenter;
 
     private AppCompatImageView iconImageView;
     private RelativeLayout backgroundRelativeLayout;
@@ -40,15 +41,20 @@ public abstract class DemoActivity extends AppCompatActivity implements DemoView
     @Nullable
     private Snackbar locationServicesDisabledSnackbar;
 
-    public DemoActivity() {
-        this.presenter = createPresenter();
+    public DemoLayout(Context context) {
+        super(context);
+        initialize();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle(R.string.app_name);
-        setContentView(R.layout.activity_demo);
+    public DemoLayout(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initialize();
+    }
+
+    private void initialize() {
+        presenter = createPresenter();
+
+        inflate(getContext(), R.layout.demo_layout, this);
 
         iconImageView = findViewById(R.id.iconImageView);
         iconImageView.setOnClickListener(v -> presenter.onIconChangeInvoked());
@@ -58,27 +64,24 @@ public abstract class DemoActivity extends AppCompatActivity implements DemoView
 
         titleTextView = findViewById(R.id.titleTextView);
         subTitleTextView = findViewById(R.id.subTitleTextView);
+
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onViewStarted() {
         presenter.onViewStarted();
     }
 
     @Override
-    protected void onStop() {
+    public void onViewStopped() {
         presenter.onViewStopped();
-        super.onStop();
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
         presenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         presenter.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -93,7 +96,7 @@ public abstract class DemoActivity extends AppCompatActivity implements DemoView
             visualizeDeviceIdHashCode(receiverPayload.getDeviceIdHashCode());
         } else {
             // payload has been created by this device
-            visualizeDeviceIdHashCode(Sblec.getDeviceIdHashCode(this));
+            visualizeDeviceIdHashCode(Sblec.getDeviceIdHashCode(getContext()));
         }
     }
 
@@ -121,7 +124,7 @@ public abstract class DemoActivity extends AppCompatActivity implements DemoView
 
     private void visualizeDeviceIdHashCode(int deviceIdHashCode) {
         String readableDeviceName = String.format("0x%08X", deviceIdHashCode);
-        titleTextView.setText(getString(R.string.status_updated_by_device, readableDeviceName));
+        titleTextView.setText(getContext().getString(R.string.status_updated_by_device, readableDeviceName));
     }
 
     @Override
@@ -168,8 +171,8 @@ public abstract class DemoActivity extends AppCompatActivity implements DemoView
 
     @Override
     public void showSendingFailedError(@NonNull Throwable throwable) {
-        String error = getString(R.string.error_sending_failed);
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        String error = getContext().getString(R.string.error_sending_failed);
+        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -179,8 +182,8 @@ public abstract class DemoActivity extends AppCompatActivity implements DemoView
 
     @Override
     public void showReceivingFailedError(@NonNull Throwable throwable) {
-        String error = getString(R.string.error_receiving_failed);
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+        String error = getContext().getString(R.string.error_receiving_failed);
+        Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -190,8 +193,15 @@ public abstract class DemoActivity extends AppCompatActivity implements DemoView
 
     @NonNull
     @Override
-    public Context getContext() {
-        return this;
+    public Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity) context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        throw new IllegalStateException("Unable to get Activity from context");
     }
 
     @NonNull

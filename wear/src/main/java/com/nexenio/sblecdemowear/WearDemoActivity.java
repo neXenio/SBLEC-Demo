@@ -1,28 +1,29 @@
-package com.nexenio.sblecdemoapp;
+package com.nexenio.sblecdemowear;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.wearable.activity.WearableActivity;
 
 import com.nexenio.sblecdemo.DemoLayout;
 
 import org.jetbrains.annotations.NotNull;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
 
-public class MobileDemoActivity extends AppCompatActivity {
+public class WearDemoActivity extends WearableActivity {
 
     private DemoLayout demoLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(com.nexenio.sblecdemo.R.string.app_name);
-        setContentView(R.layout.activity_mobile_demo);
+        setContentView(R.layout.activity_wear_demo);
 
         Timber.plant(new Timber.DebugTree());
         demoLayout = findViewById(R.id.demoLayout);
+
+        setAmbientEnabled();
     }
 
     @Override
@@ -44,7 +45,6 @@ public class MobileDemoActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
         demoLayout.onActivityResult(requestCode, resultCode, data);
     }
 

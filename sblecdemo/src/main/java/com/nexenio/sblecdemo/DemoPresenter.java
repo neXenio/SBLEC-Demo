@@ -1,7 +1,6 @@
 package com.nexenio.sblecdemo;
 
 import android.Manifest;
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -208,7 +207,7 @@ public class DemoPresenter<View extends DemoView> {
     private void requestMissingPermissions() {
         Timber.d("requestMissingPermissions() called");
         String[] permissions = new String[]{Manifest.permission.BLUETOOTH, Manifest.permission.ACCESS_COARSE_LOCATION};
-        ActivityCompat.requestPermissions((Activity) view.getContext(), permissions, REQUEST_PERMISSIONS);
+        ActivityCompat.requestPermissions(view.getActivity(), permissions, REQUEST_PERMISSIONS);
     }
 
     /*
@@ -228,7 +227,7 @@ public class DemoPresenter<View extends DemoView> {
     private void enableBluetooth() {
         Timber.d("enableBluetooth() called");
         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        ((Activity) view.getContext()).startActivityForResult(enableBtIntent, REQUEST_ENABLE_BLUETOOTH);
+        view.getActivity().startActivityForResult(enableBtIntent, REQUEST_ENABLE_BLUETOOTH);
     }
 
     /*
@@ -256,7 +255,7 @@ public class DemoPresenter<View extends DemoView> {
     private void enabledLocationServices() {
         Timber.d("enabledLocationServices() called");
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        ((Activity) view.getContext()).startActivityForResult(intent, REQUEST_ENABLE_LOCATION_SERVICES);
+        view.getActivity().startActivityForResult(intent, REQUEST_ENABLE_LOCATION_SERVICES);
     }
 
     /*
