@@ -1,9 +1,11 @@
 SBLEC Demo
 ============================
 
-This repo contains a dummy app integrating the SBLEC library.
+This repo contains a demo app integrating the SBLEC library. SBLEC enables reliable and secure data transfer using Bluetooth Low Energy without requiring a connection.
 
-![Header Image](https://raw.githubusercontent.com/neXenio/SBLEC-Demo/master/media/header_small.gif)
+![Header Image](https://raw.githubusercontent.com/neXenio/SBLEC-Demo/master/media/demo_short.gif)
+
+The app synchronizes a state (icon and background color) on nearby devices. It supports Android phones, tablets, watches and IOT devices.
 
 ## Resolving Dependencies
 
