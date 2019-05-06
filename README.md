@@ -3,7 +3,7 @@ SBLEC Demo
 
 This repo contains a dummy app integrating the SBLEC library.
 
-![Header Image](https://raw.githubusercontent.com/neXenio/SBLEC-Demo/master/media/header.jpg)
+![Header Image](https://raw.githubusercontent.com/neXenio/SBLEC-Demo/master/media/header_small.gif)
 
 ## Resolving Dependencies
 
