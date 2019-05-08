@@ -16,8 +16,6 @@ import android.widget.Toast;
 import com.nexenio.sblec.Sblec;
 import com.nexenio.sblec.receiver.ReceiverPayload;
 
-import org.jetbrains.annotations.NotNull;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -77,7 +75,7 @@ public class DemoLayout extends RelativeLayout implements DemoView<DemoPresenter
         presenter.onViewStopped();
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         presenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
