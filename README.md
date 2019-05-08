@@ -39,7 +39,7 @@ nexenio_artifactory_password=PLACEHOLDER
 
 ## Getting Started
 
-You should start by checking out the Android library module called `sblecdemo`. It contains just 4 simple Moldel, View and Presenter classes:
+You should start by checking out the Android library module called `sblecdemo`. It contains just 4 simple Model, View and Presenter classes:
 
 - `DemoPayloadWrapper`
 - `DemoView`, implemented in `DemoLayout`
