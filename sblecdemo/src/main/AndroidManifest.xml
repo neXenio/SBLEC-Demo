@@ -2,4 +2,5 @@
           package="com.nexenio.sblecdemo">
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
+
 </manifest>
