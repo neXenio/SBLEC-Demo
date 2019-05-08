@@ -13,7 +13,9 @@ import android.provider.Settings;
 import com.nexenio.sblec.Sblec;
 import com.nexenio.sblec.payload.PayloadIdFilter;
 import com.nexenio.sblec.receiver.PayloadReceiver;
+import com.nexenio.sblec.receiver.ReceiverPayload;
 import com.nexenio.sblec.sender.PayloadSender;
+import com.nexenio.sblec.sender.SenderPayload;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,8 +28,22 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
+/**
+ * The presenter for a {@link DemoView}. It will use the {@link Sblec} library to send and receive
+ * payloads (i.e. the {@link DemoPayloadWrapper}).
+ */
 public class DemoPresenter<View extends DemoView> {
 
+    /**
+     * Company identifiers are unique numbers assigned by the Bluetooth SIG to member companies
+     * requesting one.
+     *
+     * This value may be used in the internal and interoperability tests before a Company ID has
+     * been assigned. This value shall not be used in shipping end products.
+     *
+     * @see <a href="https://www.bluetooth.com/specifications/assigned-numbers/company-identifiers">Bluetooth
+     *         Specification: Company Identifiers</a>
+     */
     private static final int COMPANY_ID = Sblec.COMPANY_ID_UNASSIGNED;
 
     private static final int REQUEST_PERMISSIONS = 1;
@@ -36,8 +52,14 @@ public class DemoPresenter<View extends DemoView> {
 
     private View view;
 
+    /**
+     * Used for sending {@link SenderPayload}s to nearby devices.
+     */
     private PayloadSender payloadSender;
 
+    /**
+     * Used for receiving {@link ReceiverPayload} from nearby devices.
+     */
     private PayloadReceiver payloadReceiver;
 
     private CompositeDisposable compositeDisposable;
@@ -79,7 +101,7 @@ public class DemoPresenter<View extends DemoView> {
 
     public void onEnableLocationServicesInvoked() {
         Timber.d("onEnableLocationServicesInvoked() called");
-        enabledLocationServices();
+        enableLocationServices();
     }
 
     public void onIconChangeInvoked() {
@@ -121,6 +143,12 @@ public class DemoPresenter<View extends DemoView> {
         }
     }
 
+    /**
+     * Will attempt to send the specified {@link DemoPayloadWrapper} to nearby devices.
+     *
+     * Note that the sending will continue until the {@link #sendDemoPayloadDisposable} gets
+     * disposed or an error occurred (e.g. because Bluetooth gets disabled).
+     */
     private void sendDemoPayload(@NonNull DemoPayloadWrapper demoPayloadWrapper) {
         Timber.d("sendDemoPayload() called");
         if (sendDemoPayloadDisposable != null && !sendDemoPayloadDisposable.isDisposed()) {
@@ -147,6 +175,12 @@ public class DemoPresenter<View extends DemoView> {
         compositeDisposable.add(sendDemoPayloadDisposable);
     }
 
+    /**
+     * Will attempt to receive {@link DemoPayloadWrapper}s sent by nearby devices.
+     *
+     * Note that the receiving will continue until the {@link #receiveDemoPayloadsDisposable} gets
+     * disposed or an error occurred (e.g. because Bluetooth gets disabled).
+     */
     private void receiveDemoPayloads() {
         Timber.d("receiveDemoPayloads() called");
         if (receiveDemoPayloadsDisposable != null && !receiveDemoPayloadsDisposable.isDisposed()) {
@@ -252,8 +286,8 @@ public class DemoPresenter<View extends DemoView> {
         }
     }
 
-    private void enabledLocationServices() {
-        Timber.d("enabledLocationServices() called");
+    private void enableLocationServices() {
+        Timber.d("enableLocationServices() called");
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         view.getActivity().startActivityForResult(intent, REQUEST_ENABLE_LOCATION_SERVICES);
     }
