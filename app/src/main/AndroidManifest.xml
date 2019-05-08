@@ -3,7 +3,6 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.nexenio.sblecdemoapp">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 

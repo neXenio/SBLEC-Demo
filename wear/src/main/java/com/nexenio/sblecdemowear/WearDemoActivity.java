@@ -6,8 +6,7 @@ import android.support.wearable.activity.WearableActivity;
 
 import com.nexenio.sblecdemo.DemoLayout;
 
-import org.jetbrains.annotations.NotNull;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import timber.log.Timber;
 
@@ -39,7 +38,7 @@ public class WearDemoActivity extends WearableActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         demoLayout.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

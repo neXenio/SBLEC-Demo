@@ -5,8 +5,7 @@ import android.os.Bundle;
 
 import com.nexenio.sblecdemo.DemoLayout;
 
-import org.jetbrains.annotations.NotNull;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import timber.log.Timber;
@@ -38,7 +37,7 @@ public class MobileDemoActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         demoLayout.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
